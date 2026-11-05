@@ -1,0 +1,174 @@
+/* CivicPulse AI - Advanced Interactive Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
+    --danger: #e11d48;
+    --warning: #f59e0b;
+    --success: #10b981;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Priority Badges */
+.badge-p1 {
+    background: #ffe4e6;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+    animation: pulse-p1 2s infinite ease-in-out;
+}
+
+.badge-p2 {
+    background: #ffedd5;
+    color: #ea580c;
+    border: 1px solid #fed7aa;
+}
+
+.badge-p3 {
+    background: #fef9c3;
+    color: #ca8a04;
+    border: 1px solid #fef08a;
+}
+
+.badge-p4 {
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+}
+
+@keyframes pulse-p1 {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+    50% { transform: scale(1.03); box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); }
+}
+
+/* Mic Recording Pulse Animation */
+.mic-recording {
+    background: #e11d48 !important;
+    color: white !important;
+    animation: mic-wave 1s infinite alternate;
+}
+
+@keyframes mic-wave {
+    0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
+    100% { box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+}
+
+/* Sound Wave Bars */
+.sound-wave {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 16px;
+}
+
+.sound-wave span {
+    display: inline-block;
+    width: 3px;
+    background: #e11d48;
+    border-radius: 2px;
+    animation: sound-bars 0.8s infinite ease-in-out alternate;
+}
+
+.sound-wave span:nth-child(2) { animation-delay: 0.2s; height: 100%; }
+.sound-wave span:nth-child(3) { animation-delay: 0.4s; height: 60%; }
+.sound-wave span:nth-child(4) { animation-delay: 0.1s; height: 80%; }
+
+@keyframes sound-bars {
+    0% { height: 20%; }
+    100% { height: 100%; }
+}
+
+/* Radar Pulse Marker on Map */
+.radar-marker {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    background: #e11d48;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 10px rgba(225, 29, 72, 0.8);
+}
+
+.radar-marker::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #e11d48;
+    animation: radar-ping 1.5s infinite;
+}
+
+@keyframes radar-ping {
+    0% { transform: scale(0.6); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Upload Dropzone */
+.dropzone {
+    border: 2px dashed #cbd5e1;
+    transition: all 0.2s ease;
+}
+
+.dropzone.dragover {
+    border-color: #0284c7;
+    background-color: #f0f9ff;
+}
+
+/* Toast Notifications */
+#toastContainer {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    animation: slide-in 0.3s ease-out forwards;
+}
+
+@keyframes slide-in {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

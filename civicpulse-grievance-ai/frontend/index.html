@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicPulse AI - Interactive Citizen Grievance Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" href="/favicon.ico">
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col justify-between">
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md shadow-sky-500/20">
+                    <i data-lucide="activity" class="w-6 h-6 mx-auto"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-none">CivicPulse AI</h1>
+                    <p class="text-xs text-slate-500 mt-1">Interactive Citizen Redressal & Rapid Dispatch System</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="/download-pdf" target="_blank" download class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition">
+                    <i data-lucide="file-down" class="w-4 h-4"></i>
+                    <span>📥 Download Report (PDF)</span>
+                </a>
+                <button onclick="triggerEmergencySOS()" class="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-md shadow-rose-500/30 transition animate-pulse">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                    <span>🚨 Women & Citizen SOS</span>
+                </button>
+                <a href="/static/admin.html" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium flex items-center space-x-1.5 transition shadow-sm">
+                    <i data-lucide="shield" class="w-4 h-4"></i>
+                    <span>Officer Command Center</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1">
+
+        <!-- Emergency Hotlines Ticker -->
+        <div class="bg-gradient-to-r from-rose-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-400/30 text-xs font-semibold">24x7 Rapid Municipal Dispatch</span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">NLP + XAI ACTIVE</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-2 leading-tight">Civic Grievance & Public Safety Redressal</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1">Multi-lingual NLP classification across 10 specialized civic domains with automated SLA routing.</p>
+                </div>
+                <!-- Hotlines Quick Badges -->
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <a href="tel:1091" class="px-3 py-1.5 rounded-lg bg-rose-500/30 hover:bg-rose-500/40 border border-rose-400/40 text-rose-200 font-semibold flex items-center space-x-1.5 transition">
+                        <i data-lucide="phone-call" class="w-3.5 h-3.5 text-rose-400"></i>
+                        <span>Women: 1091 / 112</span>
+                    </a>
+                    <a href="tel:1098" class="px-3 py-1.5 rounded-lg bg-pink-500/30 hover:bg-pink-500/40 border border-pink-400/40 text-pink-200 font-semibold flex items-center space-x-1.5 transition">
+                        <i data-lucide="baby" class="w-3.5 h-3.5 text-pink-400"></i>
+                        <span>Childline: 1098</span>
+                    </a>
+                    <a href="tel:14567" class="px-3 py-1.5 rounded-lg bg-purple-500/30 hover:bg-purple-500/40 border border-purple-400/40 text-purple-200 font-semibold flex items-center space-x-1.5 transition">
+                        <i data-lucide="heart-handshake" class="w-3.5 h-3.5 text-purple-400"></i>
+                        <span>Elder: 14567</span>
+                    </a>
+                    <a href="tel:1064" class="px-3 py-1.5 rounded-lg bg-slate-700/60 hover:bg-slate-700/80 border border-slate-500/40 text-slate-200 font-semibold flex items-center space-x-1.5 transition">
+                        <i data-lucide="scale" class="w-3.5 h-3.5 text-sky-400"></i>
+                        <span>Vigilance: 1064</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 CIVIC DOMAINS EXPLORER & QUICK-ACTION HUB -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                        <i data-lucide="grid" class="w-4 h-4 text-sky-600"></i>
+                        <span>Explore 10 Civic Domains (Click any issue to auto-fill)</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Select your grievance category to load pre-formatted incident templates</p>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded bg-sky-100 text-sky-800">10 Domains Active</span>
+            </div>
+
+            <!-- 10 Domains Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="domainsGrid">
+                <!-- 1. Women Safety -->
+                <div onclick="selectDomain('WOMEN_SAFETY')" id="card-WOMEN_SAFETY" class="domain-card cursor-pointer p-3.5 rounded-xl border border-rose-200 bg-rose-50/40 hover:bg-rose-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-rose-700">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">1. Women Safety</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Harassment, Stalking, Eve Teasing, SOS</span>
+                </div>
+
+                <!-- 2. Child Safety -->
+                <div onclick="selectDomain('CHILD_SAFETY')" id="card-CHILD_SAFETY" class="domain-card cursor-pointer p-3.5 rounded-xl border border-pink-200 bg-pink-50/40 hover:bg-pink-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-pink-700">
+                        <i data-lucide="baby" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">2. Child Safety</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Missing Child, Labour, School Zones</span>
+                </div>
+
+                <!-- 3. Senior Citizen Help -->
+                <div onclick="selectDomain('SENIOR_CITIZEN')" id="card-SENIOR_CITIZEN" class="domain-card cursor-pointer p-3.5 rounded-xl border border-purple-200 bg-purple-50/40 hover:bg-purple-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-purple-700">
+                        <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">3. Senior Citizen</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Medical Care, Abandoned, Welfare</span>
+                </div>
+
+                <!-- 4. Public Safety -->
+                <div onclick="selectDomain('PUBLIC_SAFETY')" id="card-PUBLIC_SAFETY" class="domain-card cursor-pointer p-3.5 rounded-xl border border-orange-200 bg-orange-50/40 hover:bg-orange-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-orange-700">
+                        <i data-lucide="alert-octagon" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">4. Public Safety</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Open Manholes, Live Wires, Hazards</span>
+                </div>
+
+                <!-- 5. Health & Hygiene -->
+                <div onclick="selectDomain('HEALTH_HYGIENE')" id="card-HEALTH_HYGIENE" class="domain-card cursor-pointer p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/40 hover:bg-emerald-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-emerald-700">
+                        <i data-lucide="stethoscope" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">5. Health & Hygiene</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Dengue, Water Quality, Food Safety</span>
+                </div>
+
+                <!-- 6. Animal Safety -->
+                <div onclick="selectDomain('ANIMAL_SAFETY')" id="card-ANIMAL_SAFETY" class="domain-card cursor-pointer p-3.5 rounded-xl border border-amber-200 bg-amber-50/40 hover:bg-amber-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-amber-700">
+                        <i data-lucide="dog" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">6. Animal Safety</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Dog Attacks, Injured Animal, Cruelty</span>
+                </div>
+
+                <!-- 7. Disability Accessibility -->
+                <div onclick="selectDomain('DISABILITY_ACCESS')" id="card-DISABILITY_ACCESS" class="domain-card cursor-pointer p-3.5 rounded-xl border border-sky-200 bg-sky-50/40 hover:bg-sky-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-sky-700">
+                        <i data-lucide="accessibility" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">7. Accessibility</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Broken Ramps, Blocked Footpaths</span>
+                </div>
+
+                <!-- 8. Environmental Issues -->
+                <div onclick="selectDomain('ENVIRONMENT')" id="card-ENVIRONMENT" class="domain-card cursor-pointer p-3.5 rounded-xl border border-green-200 bg-green-50/40 hover:bg-green-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-green-700">
+                        <i data-lucide="leaf" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">8. Environment</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Air/Noise Pollution, Tree Cutting</span>
+                </div>
+
+                <!-- 9. Disaster / Emergency -->
+                <div onclick="selectDomain('DISASTER_EMERGENCY')" id="card-DISASTER_EMERGENCY" class="domain-card cursor-pointer p-3.5 rounded-xl border border-red-200 bg-red-50/40 hover:bg-red-100/60 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-red-700">
+                        <i data-lucide="flame" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">9. Disasters & Fire</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Flooding, Fire, Collapse Risk</span>
+                </div>
+
+                <!-- 10. Corruption / Misconduct -->
+                <div onclick="selectDomain('CORRUPTION_VIGILANCE')" id="card-CORRUPTION_VIGILANCE" class="domain-card cursor-pointer p-3.5 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 transition flex flex-col justify-between">
+                    <div class="flex items-center space-x-2 text-slate-800">
+                        <i data-lucide="scale" class="w-4 h-4"></i>
+                        <span class="text-xs font-bold">10. Vigilance</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 mt-1">Bribes, Fake Closures, Delays</span>
+                </div>
+            </div>
+
+            <!-- Sub-feature Template Chips Container -->
+            <div id="subfeaturesPanel" class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="subfeatureDomainTitle" class="text-xs font-bold text-slate-800">Women Safety Sub-Categories:</span>
+                    <span class="text-[10px] text-slate-500">Tap any chip to load interactive template</span>
+                </div>
+                <div id="subfeatureChips" class="flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Main Form & Live AI Insights Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Form -->
+            <div class="lg:col-span-7 space-y-4">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base font-bold text-slate-900">Lodge Your Grievance</h3>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[11px] text-slate-500">Distress Level:</span>
+                            <div class="flex space-x-1" id="distressEmojiGroup">
+                                <button type="button" onclick="setDistressEmoji('rage')" class="emoji-btn p-1 rounded hover:bg-slate-100 text-sm" title="Furious / Emergency">😡</button>
+                                <button type="button" onclick="setDistressEmoji('fear')" class="emoji-btn p-1 rounded hover:bg-slate-100 text-sm" title="Terrified / Unsafe">😰</button>
+                                <button type="button" onclick="setDistressEmoji('worried')" class="emoji-btn p-1 rounded hover:bg-slate-100 text-sm" title="Concerned / Severe">😟</button>
+                                <button type="button" onclick="setDistressEmoji('neutral')" class="emoji-btn p-1 rounded hover:bg-slate-100 text-sm bg-slate-100" title="Standard">😐</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="grievanceForm" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Citizen Full Name</label>
+                                <input type="text" id="citizenName" placeholder="e.g. Priya Sharma" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Mobile No. (for SMS/WhatsApp Alerts)</label>
+                                <input type="tel" id="citizenPhone" placeholder="+91 98765-43210" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 text-xs">
+                            </div>
+                        </div>
+
+                        <!-- Interactive Mini Pin-Drop Map -->
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="text-xs font-semibold text-slate-700 flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-sky-600"></i>
+                                    <span>Incident Geo-Location (Click Map or Select Ward)</span>
+                                </label>
+                                <span id="pinCoordText" class="text-[10px] text-sky-700 font-mono">Click map to drop GPS pin</span>
+                            </div>
+                            <div id="miniMap" class="w-full h-36 rounded-lg border border-slate-200 z-10 mb-2"></div>
+                            <select id="wardSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 text-xs">
+                                <option value="">-- Auto-Infer from Grievance Text or Pin --</option>
+                                <option value="WARD-01">Ward 01 - Central Market & Connaught Place</option>
+                                <option value="WARD-02">Ward 02 - Civil Lines & Sector 14</option>
+                                <option value="WARD-03">Ward 03 - Green Park & Metro Hub</option>
+                                <option value="WARD-04">Ward 04 - Lajpat Nagar & Defense Colony</option>
+                                <option value="WARD-05">Ward 05 - Indiranagar & Tech Park</option>
+                                <option value="WARD-06">Ward 06 - Model Town & Industrial Area</option>
+                                <option value="WARD-07">Ward 07 - Sector 21 Residential Enclave</option>
+                                <option value="WARD-08">Ward 08 - Koramangala & Lake Zone</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="text-xs font-semibold text-slate-700">Describe Your Issue in Detail *</label>
+                                <button type="button" id="voiceBtn" class="px-2.5 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-semibold flex items-center space-x-1.5 transition">
+                                    <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                                    <span id="voiceBtnText">Voice Dictation</span>
+                                </button>
+                            </div>
+                            <div id="recordingWave" class="hidden items-center space-x-2 py-1 px-2 mb-1.5 bg-rose-50 border border-rose-200 rounded text-xs text-rose-700">
+                                <div class="sound-wave"><span></span><span></span><span></span><span></span></div>
+                                <span class="font-semibold animate-pulse">Listening live... Speak now</span>
+                            </div>
+                            <textarea id="grievanceText" rows="4" placeholder="Describe the grievance, location, landmarks, and urgency (e.g., Eve teasing near Gargi college bus stop in Ward 03 after 7 PM or Paani nahi aa raha hai Sector 14 me)..." required class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 text-xs leading-relaxed"></textarea>
+                        </div>
+
+                        <!-- Drag & Drop Photo Uploader with Simulated AI Hazard Scan -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Photo / Evidence (Optional AI Hazard Scan)</label>
+                            <div id="dropzone" class="dropzone p-4 rounded-xl text-center cursor-pointer bg-slate-50 hover:bg-slate-100/80">
+                                <input type="file" id="photoInput" accept="image/*" class="hidden">
+                                <div id="dropzonePrompt" class="flex flex-col items-center justify-center space-y-1 text-slate-500">
+                                    <i data-lucide="camera" class="w-6 h-6 text-slate-400"></i>
+                                    <span class="text-xs font-medium">Click or Drag & Drop photo here</span>
+                                    <span class="text-[10px] text-slate-400">JPG, PNG up to 10MB</span>
+                                </div>
+                                <div id="dropzonePreview" class="hidden items-center justify-between text-left p-2 bg-white rounded-lg border border-slate-200">
+                                    <div class="flex items-center space-x-3">
+                                        <img id="previewImg" src="" alt="Proof" class="w-10 h-10 rounded object-cover">
+                                        <div>
+                                            <p id="previewImgName" class="text-xs font-semibold text-slate-800">evidence.jpg</p>
+                                            <span id="aiScanBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">🔍 AI CV Scan: Verified Incident Photo</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="removePhoto()" class="text-slate-400 hover:text-red-600 text-xs font-bold">✕</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Urgency Slider Playground -->
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-bold text-slate-700 flex items-center space-x-1">
+                                    <i data-lucide="sliders" class="w-3.5 h-3.5 text-sky-600"></i>
+                                    <span>Interactive Urgency Dial</span>
+                                </span>
+                                <span id="sliderUrgencyLabel" class="text-[11px] font-bold text-sky-700">Auto (Based on Text)</span>
+                            </div>
+                            <input type="range" id="urgencySlider" min="1" max="4" value="2" class="w-full accent-sky-600 cursor-pointer">
+                            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                                <span>P4 Routine</span>
+                                <span>P3 Standard</span>
+                                <span>P2 High</span>
+                                <span>P1 Emergency</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-lg shadow-sky-500/20 transition flex items-center justify-center space-x-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Submit Grievance Now</span>
+                        </button>
+                    </form>
+
+                    <!-- Track Grievance -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-800 mb-2">Track Existing Grievance</h4>
+                        <div class="flex space-x-2">
+                            <input type="text" id="trackInput" placeholder="Enter Ticket ID (e.g. CP-2026-10001)" class="flex-1 px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                            <button type="button" id="trackBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold">Track</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Live AI Triage Preview -->
+            <div class="lg:col-span-5">
+                <div id="aiPreviewCard" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hidden sticky top-20 space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <div class="flex items-center space-x-2">
+                            <span class="flex h-2.5 w-2.5 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+                            </span>
+                            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Live AI Triage Insights</h4>
+                        </div>
+                        <span id="previewPriority" class="px-2.5 py-0.5 rounded-full text-xs font-bold">P3 (Medium)</span>
+                    </div>
+
+                    <!-- Risk Meter -->
+                    <div>
+                        <div class="flex justify-between text-[11px] font-semibold text-slate-600 mb-1">
+                            <span>Urgency Risk Index</span>
+                            <span id="previewRiskScore">75 / 100</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div id="previewRiskBar" class="h-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-300" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Details Grid -->
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Routed Authority:</span>
+                            <span id="previewDept" class="font-bold text-slate-900 text-right">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Sub-Category:</span>
+                            <span id="previewSubcat" class="font-semibold text-slate-800 text-right">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Direct Helpline:</span>
+                            <span id="previewHelpline" class="font-bold text-rose-600">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Target SLA:</span>
+                            <span id="previewSLA" class="font-bold text-emerald-700">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Inferred Ward:</span>
+                            <span id="previewWard" class="font-medium text-slate-800">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Language:</span>
+                            <span id="previewLang" class="font-medium text-slate-800">-</span>
+                        </div>
+                    </div>
+
+                    <!-- XAI Explainability -->
+                    <div class="pt-3 border-t border-slate-200">
+                        <p class="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Explainable AI (XAI) Tokens:</p>
+                        <div id="previewXAI" class="p-2.5 bg-slate-50 rounded-lg text-[11px] leading-relaxed mb-2 border border-slate-100"></div>
+                        <p id="previewRationale" class="text-[11px] text-slate-600 italic bg-amber-50/60 p-2 rounded border border-amber-200/40"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Submission Success Modal -->
+    <div id="successModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <div class="w-11 h-11 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">Grievance Triaged & Dispatched!</h3>
+                <p class="text-xs text-slate-500">Official Work Order generated and assigned to rapid response team.</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3.5 space-y-2 text-xs border border-slate-200">
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Tracking Ticket ID:</span>
+                    <span id="modalTicketId" class="font-mono font-bold text-sky-700">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Department:</span>
+                    <span id="modalDept" class="font-semibold text-slate-800 text-right">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Priority & SLA:</span>
+                    <span id="modalPriority" class="font-bold text-rose-600">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Work Order No.:</span>
+                    <span id="modalWorkOrder" class="font-mono text-slate-700">-</span>
+                </div>
+            </div>
+
+            <div id="modalClusterAlert" class="p-3 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-800 hidden">
+                ℹ️ <b>Incident Spike Detected:</b> Merged with <span id="modalClusterCount" class="font-bold">0</span> other concurrent citizen reports.
+            </div>
+
+            <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800">
+                <b>Bilingual SMS Sent:</b> <span id="modalSMS">-</span>
+            </div>
+
+            <button onclick="document.getElementById('successModal').classList.add('hidden')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs">Done</button>
+        </div>
+    </div>
+
+    <!-- Track Status Modal with Interactive Progress Steps -->
+    <div id="trackModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <h3 id="trackTitle" class="text-base font-bold text-slate-900">Grievance Status Tracking</h3>
+            <p id="trackSummary" class="text-xs text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-200">-</p>
+
+            <!-- Interactive Milestone Steps -->
+            <div class="space-y-3 border-y border-slate-200 py-3 text-xs">
+                <div class="flex items-center space-x-3 text-emerald-600">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>1. Citizen Grievance Lodged & Ingested</span>
+                </div>
+                <div class="flex items-center space-x-3 text-emerald-600">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>2. AI Categorized, Prioritized & Geo-Mapped</span>
+                </div>
+                <div class="flex items-center space-x-3 text-sky-600 font-semibold">
+                    <i data-lucide="clock" class="w-4 h-4 animate-spin"></i>
+                    <span>3. Work Order Assigned to Rapid Field Squad</span>
+                </div>
+                <div class="flex items-center space-x-3 text-slate-400">
+                    <i data-lucide="circle" class="w-4 h-4"></i>
+                    <span>4. On-Site Rectification & Photo Sign-Off</span>
+                </div>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-slate-600">
+                <div class="flex justify-between"><span>Current Status:</span><span id="trackStatus" class="font-bold text-amber-700">-</span></div>
+                <div class="flex justify-between"><span>Department:</span><span id="trackDept" class="font-semibold text-slate-800">-</span></div>
+                <div class="flex justify-between"><span>Priority:</span><span id="trackPriority" class="font-bold text-rose-600">-</span></div>
+                <div class="flex justify-between"><span>SLA Deadline:</span><span id="trackDeadline" class="font-mono text-slate-700">-</span></div>
+            </div>
+
+            <button onclick="document.getElementById('trackModal').classList.add('hidden')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs">Close</button>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

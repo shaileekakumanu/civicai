@@ -1,0 +1,183 @@
+{
+  "departments": {
+    "WOMEN_SAFETY": {
+      "id": "WOMEN_SAFETY",
+      "name": "Women Safety & Special Protection Squad",
+      "short_code": "WSS",
+      "helpline": "1091 / 112",
+      "icon": "shield-alert",
+      "color": "#e11d48",
+      "nodal_officer": "DCP Women Safety & Rapid Patrol Unit",
+      "sla_hours": { "P1": 1, "P2": 6, "P3": 24, "P4": 48 },
+      "subcategories": [
+        "Harassment in public places",
+        "Unsafe streets & dark alleys",
+        "Stalking & suspicious persons",
+        "Eve teasing & verbal abuse",
+        "Poor lighting near bus stops/colleges",
+        "Unsafe public transport spots",
+        "Emergency SOS complaint"
+      ]
+    },
+    "CHILD_SAFETY": {
+      "id": "CHILD_SAFETY",
+      "name": "Child Protection & School Zone Safety Cell",
+      "short_code": "CPC",
+      "helpline": "1098 Childline",
+      "icon": "baby",
+      "color": "#ec4899",
+      "nodal_officer": "District Child Protection Officer",
+      "sla_hours": { "P1": 2, "P2": 12, "P3": 24, "P4": 72 },
+      "subcategories": [
+        "Unsafe school zones",
+        "Child labour reports",
+        "Missing child alert",
+        "Harassment near schools",
+        "Open drains/manholes near schools"
+      ]
+    },
+    "SENIOR_CITIZEN": {
+      "id": "SENIOR_CITIZEN",
+      "name": "Senior Citizen Welfare & Emergency Assistance Cell",
+      "short_code": "SCW",
+      "helpline": "14567 Elder Line",
+      "icon": "heart-handshake",
+      "color": "#8b5cf6",
+      "nodal_officer": "Social Welfare & Elder Care Officer",
+      "sla_hours": { "P1": 2, "P2": 12, "P3": 36, "P4": 72 },
+      "subcategories": [
+        "Medical emergency support",
+        "Abandoned elderly reports",
+        "Unsafe walking paths & broken pavements",
+        "Need for police/municipal assistance"
+      ]
+    },
+    "PUBLIC_SAFETY": {
+      "id": "PUBLIC_SAFETY",
+      "name": "Public Safety & Municipal Infrastructure Hazard Cell",
+      "short_code": "PSH",
+      "helpline": "112 / 101",
+      "icon": "alert-octagon",
+      "color": "#ea580c",
+      "nodal_officer": "Chief Municipal Safety Engineer",
+      "sla_hours": { "P1": 2, "P2": 12, "P3": 24, "P4": 48 },
+      "subcategories": [
+        "Open manholes & uncovered drains",
+        "Live electric wires & sparking poles",
+        "Dangerous construction & structural risks",
+        "Fallen trees & heavy branches",
+        "Fire risk & flammable dump",
+        "Street violence & rogue elements"
+      ]
+    },
+    "HEALTH_HYGIENE": {
+      "id": "HEALTH_HYGIENE",
+      "name": "Public Health, Food Safety & Sanitation Department",
+      "short_code": "PHS",
+      "helpline": "104 Health Helpline",
+      "icon": "stethoscope",
+      "color": "#059669",
+      "nodal_officer": "Chief Medical Officer of Health (CMOH)",
+      "sla_hours": { "P1": 3, "P2": 12, "P3": 24, "P4": 72 },
+      "subcategories": [
+        "Disease outbreak signs & epidemics",
+        "Mosquito breeding & dengue/malaria risk",
+        "Contaminated drinking water",
+        "Food safety & adulteration complaints",
+        "Garbage causing severe illness"
+      ]
+    },
+    "ANIMAL_SAFETY": {
+      "id": "ANIMAL_SAFETY",
+      "name": "Veterinary Services & Animal Welfare Board",
+      "short_code": "VET",
+      "helpline": "1962 Animal Helpline",
+      "icon": "dog",
+      "color": "#d97706",
+      "nodal_officer": "Municipal Veterinary Officer",
+      "sla_hours": { "P1": 3, "P2": 12, "P3": 36, "P4": 72 },
+      "subcategories": [
+        "Stray dog attacks & biting packs",
+        "Injured animals requiring rescue",
+        "Animal cruelty & illegal abuse",
+        "Dead animal carcass removal"
+      ]
+    },
+    "DISABILITY_ACCESS": {
+      "id": "DISABILITY_ACCESS",
+      "name": "Equal Access & Disability Infrastructure Cell",
+      "short_code": "EAD",
+      "helpline": "1800-11-2001",
+      "icon": "accessibility",
+      "color": "#0284c7",
+      "nodal_officer": "Superintending Engineer (Accessibility & Footpaths)",
+      "sla_hours": { "P1": 6, "P2": 24, "P3": 48, "P4": 96 },
+      "subcategories": [
+        "Broken ramps & missing curb ramps",
+        "Footpaths blocked by encroachment",
+        "No wheelchair access in public buildings",
+        "Unsafe pedestrian crossings"
+      ]
+    },
+    "ENVIRONMENT": {
+      "id": "ENVIRONMENT",
+      "name": "Pollution Control & Environmental Protection Board",
+      "short_code": "PCB",
+      "helpline": "1800-180-1717",
+      "icon": "leaf",
+      "color": "#16a34a",
+      "nodal_officer": "Regional Environmental Officer",
+      "sla_hours": { "P1": 4, "P2": 24, "P3": 48, "P4": 96 },
+      "subcategories": [
+        "Air pollution & illegal open burning",
+        "Noise pollution & late-night loudspeakers",
+        "Illegal tree cutting & deforestation",
+        "Lake pollution & toxic sewage discharge",
+        "Industrial waste dumping"
+      ]
+    },
+    "DISASTER_EMERGENCY": {
+      "id": "DISASTER_EMERGENCY",
+      "name": "Disaster Management & Emergency Rescue Authority",
+      "short_code": "DMA",
+      "helpline": "1070 / 1077",
+      "icon": "flame",
+      "color": "#dc2626",
+      "nodal_officer": "Disaster Response Commandant",
+      "sla_hours": { "P1": 1, "P2": 6, "P3": 12, "P4": 24 },
+      "subcategories": [
+        "Flooding & severe urban waterlogging",
+        "Fire breakout & explosion",
+        "Building collapse risk & cracked structures",
+        "Storm damage & uprooted poles",
+        "Road blockage & major transit disruption"
+      ]
+    },
+    "CORRUPTION_VIGILANCE": {
+      "id": "CORRUPTION_VIGILANCE",
+      "name": "Vigilance & Anti-Corruption Bureau (Lokayukta Cell)",
+      "short_code": "VAC",
+      "helpline": "1064 Vigilance Helpline",
+      "icon": "scale",
+      "color": "#475569",
+      "nodal_officer": "Chief Vigilance Officer (CVO)",
+      "sla_hours": { "P1": 6, "P2": 24, "P3": 48, "P4": 120 },
+      "subcategories": [
+        "Bribe demand by public servant",
+        "Officer not responding / dereliction of duty",
+        "Fake closure of complaint without work",
+        "Delayed service without reason"
+      ]
+    }
+  },
+  "wards": [
+    { "id": "WARD-01", "name": "Ward 01 - Central Market & Connaught Place", "coords": { "lat": 28.6315, "lng": 77.2167 }, "zonal_officer": "Sh. R. K. Verma" },
+    { "id": "WARD-02", "name": "Ward 02 - Civil Lines & Sector 14", "coords": { "lat": 28.6750, "lng": 77.2250 }, "zonal_officer": "Smt. Sunita Rao" },
+    { "id": "WARD-03", "name": "Ward 03 - Green Park & Metro Hub", "coords": { "lat": 28.5589, "lng": 77.2028 }, "zonal_officer": "Sh. Anil Deshmukh" },
+    { "id": "WARD-04", "name": "Ward 04 - Lajpat Nagar & Defense Colony", "coords": { "lat": 28.5684, "lng": 77.2435 }, "zonal_officer": "Sh. Vikram Malhotra" },
+    { "id": "WARD-05", "name": "Ward 05 - Indiranagar & Tech Park", "coords": { "lat": 28.6010, "lng": 77.2910 }, "zonal_officer": "Smt. Meera Nair" },
+    { "id": "WARD-06", "name": "Ward 06 - Model Town & Industrial Area", "coords": { "lat": 28.7020, "lng": 77.1930 }, "zonal_officer": "Sh. Gurpreet Singh" },
+    { "id": "WARD-07", "name": "Ward 07 - Sector 21 Residential Enclave", "coords": { "lat": 28.5820, "lng": 77.0600 }, "zonal_officer": "Sh. Rajesh Gupta" },
+    { "id": "WARD-08", "name": "Ward 08 - Koramangala & Lake Zone", "coords": { "lat": 28.5350, "lng": 77.2600 }, "zonal_officer": "Smt. Priya Iyer" }
+  ]
+}
